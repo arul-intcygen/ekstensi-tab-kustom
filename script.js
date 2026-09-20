@@ -19,6 +19,7 @@ const KEYS = {
     theme: 'cozyTheme',
     settings: 'cozySettings',
     weather: 'cozyWeather',
+    skin: 'cozySkin',
 };
 
 const DEFAULT_SETTINGS = {
@@ -30,6 +31,12 @@ const DEFAULT_SETTINGS = {
 };
 
 const DEFAULT_CATEGORIES = ['Koding & AI', 'Pekerjaan', 'Belajar', 'Hiburan & Games'];
+
+const THEMES = [
+    { id: 'cozy', name: 'Cozy Haven', desc: 'Hijau hutan & krem hangat', bg: null },
+    { id: 'hollow-knight', name: 'Hollow Knight', desc: 'Gua berkabut, teal & cahaya kunang-kunang', bg: 'assets/hollow-knight/background.webp' },
+];
+const DEFAULT_SKIN = 'cozy';
 
 // Tebakan kategori (hanya dipakai sekali untuk shortcut lama yang belum punya kategori).
 const CATEGORY_HINTS = {
@@ -94,7 +101,8 @@ const store = {
 
 // Terapkan tema SEKARANG (skrip dimuat di <head>) supaya tidak kedip terang → gelap.
 document.documentElement.dataset.theme = store.get(KEYS.theme, 'light') === 'dark' ? 'dark' : 'light';
-
+const savedSkin = store.get(KEYS.skin, DEFAULT_SKIN);
+document.documentElement.dataset.skin = THEMES.some((t) => t.id === savedSkin) ? savedSkin : DEFAULT_SKIN;
 /* ---------- Helper umum ---------- */
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -838,6 +846,12 @@ function setTheme(theme) {
     document.documentElement.dataset.theme = theme;
     store.set(KEYS.theme, theme);
     updateThemeButton();
+}
+
+function setSkin(id) {
+    if (!THEMES.some((t) => t.id === id)) return;
+    document.documentElement.dataset.skin = id;
+    store.set(KEYS.skin, id);
 }
 
 function toggleTheme() {
