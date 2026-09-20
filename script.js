@@ -305,7 +305,7 @@ function tzLabel() {
 function tick() {
     const d = new Date();
     ui.clock.textContent = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-    ui.greeting.textContent = `${greeting(d.getHours())}, ${state.settings.userName}! 🌿`;
+    ui.greeting.textContent = `${greeting(d.getHours())}, ${state.settings.userName}!`;
     ui.date.textContent = d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 }
 
