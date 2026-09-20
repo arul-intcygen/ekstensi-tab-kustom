@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "Cozy Haven Tab",
+    "version": "2.0",
+    "description": "Tab baru yang hangat: shortcut tanpa batas, to-do, catatan, dan cuaca dalam satu meja kerja.",
+    "chrome_url_overrides": {
+        "newtab": "index.html"
+    },
+    "permissions": [
+        "topSites"
+    ],
+    "host_permissions": [
+        "https://api.open-meteo.com/*",
+        "https://geocoding-api.open-meteo.com/*"
+    ]
+}

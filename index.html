@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tab Baru</title>
+
+    <!-- Font dari design.md: Literata (judul) + Plus Jakarta Sans (antarmuka).
+         Kalau offline, otomatis jatuh ke Georgia / font sistem. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Sengaja tanpa defer: tema gelap/terang diterapkan sebelum halaman digambar (tanpa kedip) -->
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div class="app">
+
+        <!-- ============ HEADER ============ -->
+        <header class="header">
+            <div class="hello">
+                <div class="brand-icon" data-icon="leaf"></div>
+                <div class="hello-text">
+                    <div class="hello-row">
+                        <h1 id="greeting">Selamat Datang</h1>
+                        <span class="chip chip-sage" id="season"></span>
+                    </div>
+                    <p class="sub">
+                        <span id="date"></span>
+                        <span id="weather-wrap" hidden><span class="sep">•</span><span id="weather"></span></span>
+                    </p>
+                </div>
+            </div>
+
+            <form class="search" id="search-form" role="search" autocomplete="off">
+                <span class="search-icon" data-icon="search"></span>
+                <input id="search-input" type="text" placeholder="Cari di Google atau masukkan alamat web..."
+                    aria-label="Cari di Google atau masukkan alamat web">
+                <button type="button" class="chip chip-sage chip-btn" id="ai-mode">
+                    <span data-icon="sparkle"></span>AI Mode
+                </button>
+                <kbd title="Tekan / untuk mencari">/</kbd>
+            </form>
+
+            <div class="header-right">
+                <div class="clock">
+                    <time id="clock">--:--</time>
+                    <span id="clock-sub"></span>
+                </div>
+                <button type="button" class="icon-btn" id="theme-btn" title="Ganti tema"></button>
+                <button type="button" class="icon-btn avatar" id="settings-btn" title="Pengaturan" aria-label="Pengaturan">
+                    <span id="avatar-letter">P</span><i class="status-dot"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="layout">
+
+            <!-- ============ KOLOM KIRI ============ -->
+            <aside class="side">
+                <section class="card profile-card">
+                    <div class="profile-top">
+                        <div class="profile-avatar" data-icon="leaf"></div>
+                        <div>
+                            <p class="eyebrow">Pulau Pribadi</p>
+                            <h2 id="island-name">Sherwood Haven</h2>
+                            <p class="muted" id="island-rank"></p>
+                        </div>
+                    </div>
+                    <div class="stats">
+                        <div class="stat"><span>Tersimpan</span><strong id="stat-saved">0 Web</strong></div>
+                        <div class="stat"><span>Tugas Selesai</span><strong id="stat-done">0/0</strong></div>
+                    </div>
+                </section>
+
+                <section class="card cat-card">
+                    <p class="eyebrow">Koleksi Shortcut</p>
+                    <ul class="cat-list" id="category-list"></ul>
+                    <button type="button" class="btn-dashed" id="add-category">Tambah Kategori</button>
+                </section>
+
+                <aside class="card tip-card">
+                    <p class="tip-title">Tips Hari Ini:</p>
+                    <p id="tip-text"></p>
+                </aside>
+            </aside>
+
+            <!-- ============ KOLOM UTAMA ============ -->
+            <main class="main">
+
+                <section class="card hub">
+                    <div class="hub-head">
+                        <div class="hub-title">
+                            <div class="hub-icon" data-icon="compass"></div>
+                            <div>
+                                <h2>Pusat Navigasi &amp; Shortcut Cepat</h2>
+                                <p class="muted">Akses langsung platform favorit dan alat produktivitas harian</p>
+                            </div>
+                        </div>
+                        <div class="hub-actions">
+                            <button type="button" class="btn btn-chip" id="btn-del-cat" hidden>Hapus Kategori</button>
+                            <button type="button" class="btn btn-chip" id="btn-reorder" aria-pressed="false">Urutan Kustom</button>
+                            <button type="button" class="btn btn-secondary" id="btn-add">Tambah Pintasan</button>
+                        </div>
+                    </div>
+                    <div class="shortcut-grid" id="shortcut-grid"></div>
+                </section>
+
+                <div class="widgets">
+
+                    <section class="card widget tasks">
+                        <header class="card-head">
+                            <h2>Rencana &amp; Target Hari Ini</h2>
+                            <span class="chip chip-sage" id="task-progress">0 / 0 Selesai</span>
+                        </header>
+                        <ul class="task-list" id="task-list"></ul>
+                        <form class="task-form" id="task-form" autocomplete="off">
+                            <input id="task-input" type="text" maxlength="120" placeholder="Tulis target baru…"
+                                aria-label="Target baru">
+                            <button type="submit" class="mini-btn add" aria-label="Tambah target" data-icon="plus"></button>
+                        </form>
+                        <footer class="card-foot">
+                            <span id="xp-text"></span>
+                            <button type="button" class="link-btn" id="task-clear">Bersihkan yang selesai</button>
+                        </footer>
+                    </section>
+
+                    <section class="card widget visits">
+                        <header class="card-head">
+                            <h2>Sering Dibuka Minggu Ini</h2>
+                            <span class="muted small">Statistik 7 Hari</span>
+                        </header>
+                        <div class="visit-list" id="visit-list"></div>
+                        <div class="meter" id="tab-meter">
+                            <div class="meter-row"><span id="tab-label">Kerapian Tab</span><strong id="tab-value">—</strong></div>
+                            <div class="progress"><span id="tab-bar"></span></div>
+                        </div>
+                    </section>
+
+                    <section class="card widget notes">
+                        <header class="card-head">
+                            <h2>Catatan Meja Kerja</h2>
+                            <span class="chip chip-clay">MEMO CEPAT</span>
+                        </header>
+                        <textarea id="notes" spellcheck="false" aria-label="Catatan meja kerja"
+                            placeholder="Tulis agenda, ide, atau daftar belanja di sini…"></textarea>
+                        <footer class="card-foot">
+                            <span id="notes-status">Tersimpan otomatis lokal</span>
+                            <button type="button" class="link-btn clay" id="notes-clear">Hapus Catatan</button>
+                        </footer>
+                    </section>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p><strong>Cozy Haven Tab</strong> v<span id="version">2.0</span><span class="sep">•</span>Inspirasi visual: Sherwood Island &amp; Clean Grid.</p>
+        <nav>
+            <button type="button" class="link-btn" id="foot-theme">Ganti Tema</button>
+            <button type="button" class="link-btn" id="foot-backup">Backup Shortcut</button>
+            <button type="button" class="link-btn" id="foot-keys">Shortcut Keyboard</button>
+        </nav>
+    </footer>
+
+    <!-- ============ DIALOG ============ -->
+    <dialog id="dlg-shortcut">
+        <form class="dlg-body" id="shortcut-form" autocomplete="off">
+            <h3 id="dlg-shortcut-title">Tambah Pintasan</h3>
+            <label>Nama
+                <input id="sc-name" type="text" maxlength="40" placeholder="Contoh: YouTube">
+            </label>
+            <label>URL
+                <input id="sc-url" type="text" inputmode="url" placeholder="youtube.com">
+            </label>
+            <label>Keterangan <span class="muted">(opsional)</span>
+                <input id="sc-desc" type="text" maxlength="30" placeholder="Contoh: Video &amp; Musik">
+            </label>
+            <label>Kategori
+                <select id="sc-cat"></select>
+            </label>
+            <p class="form-error" id="shortcut-error" role="alert" hidden></p>
+            <div class="dlg-actions">
+                <button type="button" class="btn btn-ghost" data-close>Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="dlg-category">
+        <form class="dlg-body" id="category-form" autocomplete="off">
+            <h3>Tambah Kategori</h3>
+            <label>Nama kategori
+                <input id="cat-name" type="text" maxlength="24" placeholder="Contoh: Keamanan Jaringan">
+            </label>
+            <p class="form-error" id="category-error" role="alert" hidden></p>
+            <div class="dlg-actions">
+                <button type="button" class="btn btn-ghost" data-close>Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="dlg-settings">
+        <form class="dlg-body" id="settings-form" autocomplete="off">
+            <h3>Pengaturan</h3>
+            <label>Nama panggilan
+                <input id="set-name" type="text" maxlength="24">
+            </label>
+            <label>Nama pulau
+                <input id="set-island" type="text" maxlength="28">
+            </label>
+            <label>Kota (untuk cuaca)
+                <input id="set-city" type="text" maxlength="40">
+            </label>
+            <div class="dlg-actions">
+                <button type="button" class="btn btn-ghost" data-close>Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="dlg-backup">
+        <div class="dlg-body">
+            <h3>Backup Shortcut</h3>
+            <p class="muted">Ekspor menyimpan shortcut, kategori, to-do, dan catatan ke satu file .json. Impor akan menimpa data yang ada sekarang.</p>
+            <div class="dlg-actions spread">
+                <button type="button" class="btn btn-secondary" id="btn-export">Ekspor (.json)</button>
+                <button type="button" class="btn btn-secondary" id="btn-import">Impor dari file</button>
+                <input type="file" id="import-file" accept="application/json,.json" hidden>
+            </div>
+            <div class="dlg-actions">
+                <button type="button" class="btn btn-ghost" data-close>Tutup</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="dlg-keys">
+        <div class="dlg-body">
+            <h3>Shortcut Keyboard</h3>
+            <dl class="keys">
+                <div><dt><kbd>/</kbd></dt><dd>Fokus ke kolom pencarian</dd></div>
+                <div><dt><kbd>N</kbd></dt><dd>Tambah pintasan baru</dd></div>
+                <div><dt><kbd>E</kbd></dt><dd>Mode urutan kustom (seret untuk memindah)</dd></div>
+                <div><dt><kbd>T</kbd></dt><dd>Ganti tema terang / gelap</dd></div>
+                <div><dt><kbd>Esc</kbd></dt><dd>Tutup dialog</dd></div>
+            </dl>
+            <p class="muted small">Catatan: Chrome biasanya memfokuskan kolom alamat saat tab baru dibuka. Klik halaman sekali agar tombol pintasan aktif.</p>
+            <div class="dlg-actions">
+                <button type="button" class="btn btn-ghost" data-close>Tutup</button>
+            </div>
+        </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <span id="toast-msg"></span>
+        <button type="button" class="link-btn" id="toast-action" hidden></button>
+    </div>
+</body>
+
+</html>
