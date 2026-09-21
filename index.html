@@ -13,9 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="themes/hollow-knight.css">
-    
+
     <!-- Sengaja tanpa defer: tema gelap/terang diterapkan sebelum halaman digambar (tanpa kedip) -->
-    <script src="script.js"></script>
+    <script src="theme-init.js"></script>
+    <script type="module" src="script.js"></script>
+
 </head>
 
 <body>
@@ -254,6 +256,17 @@
             <p class="muted small">Catatan: Chrome biasanya memfokuskan kolom alamat saat tab baru dibuka. Klik halaman sekali agar tombol pintasan aktif.</p>
             <div class="dlg-actions">
                 <button type="button" class="btn btn-ghost" data-close>Tutup</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="dlg-themes">
+        <div class="dlg-body">
+            <h3>Pilih Tema</h3>
+            <p class="muted">Mode terang/gelap diatur lewat tombol bulan/matahari di pojok kanan atas dan berlaku untuk semua tema.</p>
+            <div class="theme-list" id="theme-list"></div>
+            <div class="dlg-actions">
+                <button type="button" class="btn btn-primary" data-close>Selesai</button>
             </div>
         </div>
     </dialog>

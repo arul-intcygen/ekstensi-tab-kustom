@@ -1,4 +1,7 @@
-'use strict';
+import { KEYS } from './js/config.js';
+import { store } from './js/storage.js';
+import { $, el, svg } from './js/utils.js';
+import { initThemes, toggleMode } from './js/features/themes.js';
 
 /* =========================================================
    Cozy Haven Tab — script.js
@@ -9,19 +12,6 @@
 
 /* ---------- Konfigurasi ---------- */
 
-const KEYS = {
-    shortcuts: 'myShortcuts',        // SAMA dengan versi lama → shortcut lamamu tetap terbaca
-    categories: 'cozyCategories',
-    tasks: 'cozyTasks',
-    notes: 'cozyNotes',
-    hits: 'cozyHits',
-    xp: 'cozyXP',
-    theme: 'cozyTheme',
-    settings: 'cozySettings',
-    weather: 'cozyWeather',
-    skin: 'cozySkin',
-};
-
 const DEFAULT_SETTINGS = {
     userName: 'Petualang',
     islandName: 'Sherwood Haven',
@@ -31,12 +21,6 @@ const DEFAULT_SETTINGS = {
 };
 
 const DEFAULT_CATEGORIES = ['Koding & AI', 'Pekerjaan', 'Belajar', 'Hiburan & Games'];
-
-const THEMES = [
-    { id: 'cozy', name: 'Cozy Haven', desc: 'Hijau hutan & krem hangat', bg: null },
-    { id: 'hollow-knight', name: 'Hollow Knight', desc: 'Gua berkabut, teal & cahaya kunang-kunang', bg: 'assets/hollow-knight/background.webp' },
-];
-const DEFAULT_SKIN = 'cozy';
 
 // Tebakan kategori (hanya dipakai sekali untuk shortcut lama yang belum punya kategori).
 const CATEGORY_HINTS = {
@@ -64,70 +48,10 @@ const TIPS = [
     'Regangkan bahu dan leher sebentar. Tubuh yang santai membuat pikiran lebih jernih.',
 ];
 
-const ICONS = {
-    leaf: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>',
-    search: '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
-    sparkle: '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/>',
-    compass: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
-    plus: '<path d="M12 5v14M5 12h14"/>',
-    close: '<path d="M18 6 6 18M6 6l12 12"/>',
-    edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
-    star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
-    moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
-    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
-};
-
 const LETTER_COLORS = ['#2E4F3E', '#4E6450', '#7A6A3F', '#8A5A2B', '#5F7F8A', '#8C5B4C', '#5C7A4E', '#6B5B7B'];
 
-/* ---------- Penyimpanan ---------- */
-
-const store = {
-    get(key, fallback) {
-        try {
-            const raw = localStorage.getItem(key);
-            return raw === null ? fallback : JSON.parse(raw);
-        } catch (e) {
-            return fallback;
-        }
-    },
-    set(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (e) {
-            console.warn('Gagal menyimpan', key, e);
-        }
-    },
-};
-
-// Terapkan tema SEKARANG (skrip dimuat di <head>) supaya tidak kedip terang → gelap.
-document.documentElement.dataset.theme = store.get(KEYS.theme, 'light') === 'dark' ? 'dark' : 'light';
-const savedSkin = store.get(KEYS.skin, DEFAULT_SKIN);
-document.documentElement.dataset.skin = THEMES.some((t) => t.id === savedSkin) ? savedSkin : DEFAULT_SKIN;
-/* ---------- Helper umum ---------- */
-
-const $ = (sel, root = document) => root.querySelector(sel);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
-
-function el(tag, cls, text) {
-    const node = document.createElement(tag);
-    if (cls) node.className = cls;
-    if (text !== undefined) node.textContent = text;
-    return node;
-}
-
-function svg(name) {
-    const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    s.setAttribute('viewBox', '0 0 24 24');
-    s.setAttribute('fill', 'none');
-    s.setAttribute('stroke', 'currentColor');
-    s.setAttribute('stroke-width', '2');
-    s.setAttribute('stroke-linecap', 'round');
-    s.setAttribute('stroke-linejoin', 'round');
-    s.setAttribute('aria-hidden', 'true');
-    s.innerHTML = ICONS[name] || '';   // ICONS = konstanta di atas, bukan input pengguna
-    return s;
-}
 
 function hydrateIcons() {
     document.querySelectorAll('[data-icon]').forEach((node) => node.replaceChildren(svg(node.dataset.icon)));
@@ -842,28 +766,6 @@ async function importBackup(file) {
 
 /* ---------- Tema, pencarian, catatan ---------- */
 
-function setTheme(theme) {
-    document.documentElement.dataset.theme = theme;
-    store.set(KEYS.theme, theme);
-    updateThemeButton();
-}
-
-function setSkin(id) {
-    if (!THEMES.some((t) => t.id === id)) return;
-    document.documentElement.dataset.skin = id;
-    store.set(KEYS.skin, id);
-}
-
-function toggleTheme() {
-    setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
-}
-
-function updateThemeButton() {
-    const dark = document.documentElement.dataset.theme === 'dark';
-    ui.themeBtn.replaceChildren(svg(dark ? 'sun' : 'moon'));
-    ui.themeBtn.setAttribute('aria-label', dark ? 'Ganti ke tema terang' : 'Ganti ke tema gelap');
-}
-
 function toNavigable(q) {
     if (/\s/.test(q)) return null;
     if (/^https?:\/\//i.test(q)) return normalizeUrl(q);
@@ -899,7 +801,6 @@ function cacheElements() {
         greeting: $('#greeting'), season: $('#season'), date: $('#date'),
         weatherWrap: $('#weather-wrap'), weather: $('#weather'),
         clock: $('#clock'), clockSub: $('#clock-sub'), avatarLetter: $('#avatar-letter'),
-        themeBtn: $('#theme-btn'),
         searchInput: $('#search-input'),
         islandName: $('#island-name'), islandRank: $('#island-rank'),
         statSaved: $('#stat-saved'), statDone: $('#stat-done'),
@@ -920,8 +821,6 @@ function bindEvents() {
     ui.searchInput.addEventListener('keydown', (e) => { if (e.key === 'Escape') ui.searchInput.blur(); });
 
     // Header & footer
-    ui.themeBtn.addEventListener('click', toggleTheme);
-    $('#foot-theme').addEventListener('click', toggleTheme);
     $('#settings-btn').addEventListener('click', () => {
         $('#set-name').value = state.settings.userName;
         $('#set-island').value = state.settings.islandName;
@@ -1010,7 +909,7 @@ function bindEvents() {
             case '/': e.preventDefault(); ui.searchInput.focus(); break;
             case 'n': case 'N': e.preventDefault(); openShortcutDialog(); break;
             case 'e': case 'E': toggleReorder(); break;
-            case 't': case 'T': toggleTheme(); break;
+            case 't': case 'T': toggleMode(); break;
             default:
         }
     });
@@ -1029,7 +928,7 @@ function toggleReorder() {
 function init() {
     cacheElements();
     hydrateIcons();
-    updateThemeButton();
+    initThemes();
 
     // Muat data
     const savedCats = store.get(KEYS.categories, null);

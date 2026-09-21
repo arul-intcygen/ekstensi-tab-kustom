@@ -22,7 +22,7 @@
 
     /* Permukaan (dari warna dominan gambar) */
     --canvas: #071119;
-    --card: #0D2332;
+    --card: rgba(13, 35, 50, 0.78);
     --inset: #081724;
     --tile: #11293A;
     --border: #153144;
@@ -73,7 +73,7 @@
 
     /* Permukaan: "kabut" teal pucat (dirancang, tidak ada di gambar) */
     --canvas: #E6EFEE;
-    --card: #F6FAF9;
+    --card: rgba(246, 250, 249, 0.80);
     --inset: #DDE8E7;
     --tile: #EDF4F3;
     --border: #C9D9D8;
@@ -112,5 +112,13 @@
     --shadow-float: 0 12px 32px -4px rgba(31, 90, 95, 0.14), 0 4px 12px -2px rgba(14, 42, 46, 0.06);
     --shadow-hover: 0 10px 24px -2px rgba(31, 90, 95, 0.18);
 
-    --bg-veil: rgba(230, 239, 238, 0.78);
+    --bg-veil: rgba(230, 239, 238, 0);
+}
+
+:root[data-skin="hollow-knight"][data-theme="light"] .profile-avatar { color: #EEFFF7; }  /* 4,35:1 */
+
+/* Efek kaca: latar di belakang kartu dan dialog sedikit dikaburkan */
+:root[data-skin="hollow-knight"] .card,
+:root[data-skin="hollow-knight"] dialog {
+    backdrop-filter: blur(14px);
 }

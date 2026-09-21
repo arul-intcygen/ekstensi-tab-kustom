@@ -763,3 +763,41 @@ dialog::backdrop { background: rgba(36, 38, 34, 0.45); backdrop-filter: blur(3px
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* ---------- Latar gambar (untuk tema yang punya gambar) ---------- */
+:root[data-bg] body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(var(--bg-veil), var(--bg-veil)),   /* lapisan atas: veil */
+        var(--bg-image) center / cover no-repeat;          /* lapisan bawah: gambar */
+    pointer-events: none;
+}
+
+/* ---------- Pemilih tema ---------- */
+.theme-list { display: flex; flex-direction: column; gap: 10px; }
+.theme-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 12px 14px;
+    text-align: left;
+    background: var(--tile);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.theme-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.theme-card.active {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary) 25%, transparent);
+}
+.theme-swatches { display: flex; flex: none; }
+.theme-swatches i { width: 22px; height: 22px; margin-left: -6px; border-radius: 50%; border: 2px solid var(--card); }
+.theme-swatches i:first-child { margin-left: 0; }
+.theme-text { display: flex; flex-direction: column; min-width: 0; }
+.theme-text small { color: var(--muted); font-size: 11.5px; }
