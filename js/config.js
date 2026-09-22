@@ -53,4 +53,11 @@ export const THEMES = [
         bg: 'assets/moss-grotto/background.webp',
         singleMode: true,   // penanda: tema ini tidak punya gelap/terang
     },
+    {
+        id: 'minimalist',
+        name: 'Minimalist Focus',
+        desc: 'Monokrom bersih, tanpa gambar latar — fokus ke shortcut',
+        swatch: ['#18181b', '#71717a', '#22c55e'],
+        bg: null,
+    },
 ];
