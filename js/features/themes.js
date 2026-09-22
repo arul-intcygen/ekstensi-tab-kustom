@@ -29,15 +29,26 @@ export function setMode(mode) {
 }
 
 export function toggleMode() {
+    if (isSingleModeSkin()) return;
     setMode(getMode() === 'dark' ? 'light' : 'dark');
+}
+
+function isSingleModeSkin() {
+    const theme = THEMES.find((t) => t.id === getSkin());
+    return !!(theme && theme.singleMode);
 }
 
 function updateModeButton() {
     const btn = $('#theme-btn');
     if (!btn) return;
+    if (isSingleModeSkin()) {
+        btn.hidden = true;
+        return;
+    }
+    btn.hidden = false;
     const dark = getMode() === 'dark';
     const label = dark ? 'Ganti ke mode terang' : 'Ganti ke mode gelap';
-    btn.replaceChildren(svg(dark ? 'sun' : 'moon'));   // ikon = mode tujuan
+    btn.replaceChildren(svg(dark ? 'sun' : 'moon'));
     btn.setAttribute('aria-label', label);
     btn.title = label;
 }
@@ -55,6 +66,7 @@ export function setSkin(id) {
     store.set(KEYS.skin, id);
     applyBackground();
     markActiveTheme();
+    updateModeButton();
 }
 
 /** Memasang gambar latar milik tema aktif (jika ada). CSS-nya ada di style.css: :root[data-bg] body::before */

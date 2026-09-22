@@ -1,0 +1,100 @@
+/* =========================================================
+   Tema: Moss Grotto Rest — Hornet (Hollow Knight: Silksong)
+   (data-skin="moss-grotto")
+   ---------------------------------------------------------
+   Versi ini mengikuti file design system resmi "Moss Sanctuary
+   & Silk" (token M3 + spesifikasi komponen/elevasi/tipografi),
+   BUKAN lagi design.md ringkas yang pertama.
+
+   Tema ini HANYA SATU MODE — lihat js/features/themes.js untuk
+   logika penyembunyian tombol gelap/terang.
+
+   Harus dimuat SETELAH style.css.
+   ========================================================= */
+
+:root[data-skin="moss-grotto"] {
+    color-scheme: dark;
+
+    /* Font khusus tema ini: Newsreader (judul/jam) + Geist (UI) */
+    --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+    /* Permukaan dasar */
+    --canvas: #0a160d;
+    --card: rgba(15, 30, 20, 0.58);      /* Level 2: kartu/widget besar */
+    --inset: rgba(10, 22, 13, 0.45);     /* input di dalam dialog */
+    --tile: rgba(10, 22, 13, 0.42);      /* Level 1: item kecil (shortcut, task, visit, stat) */
+    --border: rgba(134, 239, 172, 0.12); /* Level 1 border */
+    --stroke: rgba(163, 230, 53, 0.22);  /* Level 2 border / garis pembatas */
+    --hover: rgba(20, 39, 26, 0.65);
+    --dot: transparent;
+    --icon-bg: rgba(216, 230, 215, 0.92);
+
+    /* Teks */
+    --text: #f0fdf4;
+    --muted: #bccabb;
+    --muted-2: #bbf7d0;
+
+    /* Aksen — CTA memakai crimson, hijau untuk status/aktif/fokus */
+    --primary: #4ade80;
+    --primary-fill: rgba(225, 29, 72, 0.85);   /* Primary Silk Action */
+    --on-primary: #ffffff;
+    --grad-active: linear-gradient(135deg, #4ade80, #22c55e);
+    --secondary: #a3e635;
+    --tertiary: #fef08a;                       /* Luminous Lantern Amber */
+    --sage-btn: rgba(20, 39, 26, 0.50);         /* Secondary Spore Action */
+    --chip-sage: rgba(74, 222, 128, 0.12);
+    --chip-clay: rgba(244, 63, 94, 0.22);
+    --chip-neutral: rgba(18, 30, 21, 0.5);
+    --clay-text: #f43f5e;
+    --up: #4ade80;
+    --down: #f43f5e;
+
+    /* Dekorasi */
+    --search-bg: rgba(10, 22, 13, 0.45);
+    --tip-bg: linear-gradient(160deg, rgba(254, 240, 138, 0.14), rgba(244, 63, 94, 0.12));
+    --tape-a: rgba(254, 240, 138, 0.30);
+    --tape-b: rgba(244, 63, 94, 0.30);
+
+    /* Bayangan dasar (Level 1) + glow ambient hijau sesuai spesifikasi */
+    --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+    --shadow-float: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-hover: 0 0 12px rgba(74, 222, 128, 0.35);
+
+    --bg-veil: rgba(5, 14, 8, 0.35);
+}
+
+/* ---------- Elevasi bertingkat sesuai spesifikasi ---------- */
+
+/* Level 2 — kartu/widget besar: profil, hub, to-do, catatan, dst. */
+:root[data-skin="moss-grotto"] .card {
+    background: rgba(15, 30, 20, 0.58);
+    border-color: rgba(163, 230, 53, 0.22);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Level 3 — dialog: aksen crimson di border + glow hijau */
+:root[data-skin="moss-grotto"] dialog {
+    background: rgba(10, 22, 13, 0.85);
+    border-color: rgba(244, 63, 94, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    box-shadow: 0 0 24px rgba(74, 222, 128, 0.2);
+}
+
+/* Level 1 — item kecil di dalam kartu: shortcut, tugas, riwayat kunjungan, statistik, input */
+:root[data-skin="moss-grotto"] .shortcut,
+:root[data-skin="moss-grotto"] .task,
+:root[data-skin="moss-grotto"] .visit,
+:root[data-skin="moss-grotto"] .stat,
+:root[data-skin="moss-grotto"] .dlg-body input,
+:root[data-skin="moss-grotto"] .dlg-body select,
+:root[data-skin="moss-grotto"] .task-form input {
+    border-radius: 8px;
+    /* backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px); */
+}

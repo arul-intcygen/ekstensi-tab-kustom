@@ -45,4 +45,12 @@ export const THEMES = [
         swatch: ['#398186', '#7468B0', '#D9EC8A'],
         bg: 'assets/hollow-knight/background.webp',
     },
+    {
+        id: 'moss-grotto',
+        name: 'Moss Grotto Rest',
+        desc: 'Gua lumut zamrud & sutra Hornet (satu mode)',
+        swatch: ['#4ade80', '#a3e635', '#f43f5e'],
+        bg: 'assets/moss-grotto/background.webp',
+        singleMode: true,   // penanda: tema ini tidak punya gelap/terang
+    },
 ];

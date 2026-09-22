@@ -1,0 +1,74 @@
+/* =========================================================
+   Tema: Moss Grotto Rest — Hornet (Hollow Knight: Silksong)
+   (data-skin="moss-grotto")
+   ---------------------------------------------------------
+   Tema ini HANYA SATU MODE (tidak ada gelap/terang terpisah).
+   Karena itu selektornya TIDAK dirantai dengan [data-theme=...]
+   seperti hollow-knight.css — cukup [data-skin="moss-grotto"] saja,
+   agar variabel ini selalu menang apa pun nilai data-theme saat ini.
+   js/features/themes.js yang menyembunyikan tombol gelap/terang
+   ketika tema ini aktif (lihat panduan instalasi).
+
+   Harus dimuat SETELAH style.css.
+
+   Sumber warna: design.md "Moss Grotto Rest" (moss greens, spora
+   zamrud, emas sangkar, merah sutra Hornet).
+   ========================================================= */
+
+:root[data-skin="moss-grotto"] {
+    color-scheme: dark;
+
+    /* Permukaan (kaca transparan, blur rendah agar background tetap tajam) */
+    --canvas: #06110a;
+    --card: rgba(9, 21, 13, 0.45);
+    --inset: rgba(6, 17, 10, 0.55);
+    --tile: rgba(14, 30, 20, 0.5);
+    --border: rgba(134, 239, 172, 0.16);
+    --stroke: rgba(134, 239, 172, 0.22);
+    --hover: rgba(16, 36, 23, 0.65);
+    --dot: transparent;              /* pola titik Cozy dimatikan */
+    --icon-bg: rgba(240, 253, 244, 0.92);
+
+    /* Teks */
+    --text: #f0fdf4;                 /* text-bright */
+    --muted: #6ee7b7;                /* text-muted */
+    --muted-2: #a7f3d0;              /* text-secondary */
+
+    /* Aksen */
+    --primary: #4ade80;              /* moss-vibrant: judul, tautan */
+    --primary-fill: #4ade80;         /* tombol, checkbox */
+    --on-primary: #0a160d;           /* teks gelap di atas hijau terang, kontras lebih baik dari putih */
+    --grad-active: linear-gradient(135deg, #4ade80, #22c55e);
+    --secondary: #a3e635;            /* spore-lime: eyebrow, progres, cincin fokus */
+    --tertiary: #facc15;             /* cage-brass: bintang prioritas */
+    --sage-btn: rgba(74, 222, 128, 0.16);
+    --chip-sage: rgba(74, 222, 128, 0.14);
+    --chip-clay: rgba(244, 63, 94, 0.22);   /* peran "clay" diganti silk-crimson */
+    --chip-neutral: rgba(9, 21, 13, 0.5);
+    --clay-text: #f43f5e;
+    --up: #4ade80;
+    --down: #f43f5e;                 /* silk-crimson */
+
+    /* Dekorasi */
+    --search-bg: rgba(9, 21, 13, 0.5);
+    --tip-bg: linear-gradient(160deg, rgba(250, 204, 21, 0.14), rgba(244, 63, 94, 0.12));
+    --tape-a: rgba(250, 204, 21, 0.30);
+    --tape-b: rgba(244, 63, 94, 0.30);
+
+    /* Bayangan: sesuai spesifikasi .grotto-glass di design.md */
+    --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+    --shadow-float: 0 10px 35px 0 rgba(0, 0, 0, 0.55), 0 0 20px rgba(74, 222, 128, 0.12);
+    --shadow-hover: 0 10px 35px 0 rgba(0, 0, 0, 0.55), 0 0 20px rgba(74, 222, 128, 0.12);
+
+    /* Veil datar tipis di atas gambar latar (bukan vignette radial —
+       mesin latar yang ada di style.css cuma dukung warna rata) */
+    --bg-veil: rgba(4, 12, 7, 0.35);
+}
+
+/* Kaca lebih bening + blur rendah (4-6px), beda dari hollow-knight (14px) */
+:root[data-skin="moss-grotto"] .card,
+:root[data-skin="moss-grotto"] dialog {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 14px;
+}
