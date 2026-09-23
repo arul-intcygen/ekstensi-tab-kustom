@@ -612,7 +612,8 @@ function openShortcutDialog(sc = null) {
     fillCategorySelect($('#sc-cat'), sc ? sc.cat : state.activeCat !== 'all' ? state.activeCat : '');
     ui.scError.hidden = true;
     $('#dlg-shortcut').showModal();
-    (sc ? $('#sc-name') : $('#sc-url')).focus();
+    // (sc ? $('#sc-name') : $('#sc-url')).focus();
+    $('#sc-name').focus()
 }
 
 function submitShortcut(e) {
