@@ -72,6 +72,10 @@ function todayKey() {
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
+function revealApp() {
+    document.documentElement.removeAttribute('data-boot');
+}
+
 // Hanya http/https yang diterima (menolak javascript:, file:, dll.)
 function normalizeUrl(input) {
     let s = String(input || '').trim();
@@ -965,6 +969,7 @@ function init() {
         Object.keys(state.hits).forEach((k) => { if (!ids.has(k)) delete state.hits[k]; });
         store.set(KEYS.hits, state.hits);
         renderAll();
+        revealApp();
     });
 
     renderTabMeter();

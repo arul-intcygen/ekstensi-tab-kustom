@@ -94,6 +94,14 @@
     --shadow-hover: 0 10px 24px -2px rgba(0, 0, 0, 0.5);
 }
 
+html[data-boot="pending"] body {
+    opacity: 0;
+    pointer-events: none;
+}
+body {
+    transition: opacity 0.12s ease-out;
+}
+
 /* ---------- Dasar ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }

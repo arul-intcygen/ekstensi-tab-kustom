@@ -10,6 +10,7 @@
    Nama kunci di bawah HARUS sama dengan KEYS.theme dan KEYS.skin
    di js/config.js.
    ========================================================= */
+
 (() => {
     const root = document.documentElement;
 
@@ -21,4 +22,7 @@
 
     const skin = read('cozySkin');
     if (typeof skin === 'string' && skin) root.dataset.skin = skin;
+
+    // Sembunyikan halaman dulu — dilepas oleh script.js setelah data asli siap
+    root.dataset.boot = 'pending';
 })();
