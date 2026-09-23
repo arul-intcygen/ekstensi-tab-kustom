@@ -114,6 +114,11 @@ function guessCategory(url) {
 
 /* ---------- State ---------- */
 
+function setActiveCat(cat) {
+    state.activeCat = cat;
+    store.set(KEYS.activeCat, cat);
+}
+
 const state = {
     settings: { ...DEFAULT_SETTINGS, ...store.get(KEYS.settings, {}) },
     categories: [],
@@ -271,7 +276,7 @@ function renderCategories() {
         if (state.activeCat === key) btn.setAttribute('aria-current', 'true');
         btn.append(el('span', 'cat-name', label), el('span', 'cat-count', String(count)));
         btn.addEventListener('click', () => {
-            state.activeCat = key;
+            setActiveCat(key);
             renderCategories();
             renderShortcuts();
         });
@@ -646,7 +651,7 @@ function submitCategory(e) {
         err.textContent = 'Kategori itu sudah ada.'; err.hidden = false; return;
     }
     state.categories.push(name);
-    state.activeCat = name;
+    setActiveCat(name);
     saveCategories();
     $('#dlg-category').close();
     renderAll();
@@ -658,7 +663,7 @@ function deleteActiveCategory() {
     if (!confirm(`Hapus kategori “${c}”? Shortcut di dalamnya tidak ikut terhapus, hanya menjadi tanpa kategori.`)) return;
     state.categories = state.categories.filter((x) => x !== c);
     state.shortcuts.forEach((s) => { if (s.cat === c) s.cat = ''; });
-    state.activeCat = 'all';
+    setActiveCat('all');
     saveCategories();
     saveShortcuts();
     renderAll();
@@ -751,7 +756,7 @@ async function importBackup(file) {
             }
         }
 
-        state.activeCat = 'all';
+        setActiveCat('all');
         saveCategories();
         saveShortcuts();
         saveTasks();
@@ -935,6 +940,12 @@ function init() {
     state.categories = Array.isArray(savedCats)
         ? savedCats.filter((c) => typeof c === 'string' && c.trim())
         : [...DEFAULT_CATEGORIES];
+
+    const savedActiveCat = store.get(KEYS.activeCat, 'all');
+    state.activeCat = savedActiveCat === 'all' || state.categories.includes(savedActiveCat)
+        ? savedActiveCat
+        : 'all';
+
     state.tasks = loadTasks();
     state.xp = Math.max(0, Number(store.get(KEYS.xp, 0)) || 0);
     state.hits = store.get(KEYS.hits, {}) || {};

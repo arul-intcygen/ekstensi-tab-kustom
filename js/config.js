@@ -16,6 +16,7 @@ export const KEYS = {
     skin: 'cozySkin',        // tema: id dari THEMES
     settings: 'cozySettings',
     weather: 'cozyWeather',
+    activeCat: 'cozyActiveCat',
 };
 
 export const DEFAULT_SKIN = 'cozy';
