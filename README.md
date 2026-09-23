@@ -1,6 +1,6 @@
 # Cozy Haven Tab
 
-Tab baru Chrome yang hangat: shortcut tanpa batas, to-do, catatan, cuaca, dan empat tema visual — semuanya berjalan 100% lokal tanpa server maupun akun.
+Tab Chrome custom : May look too fancy but intended for personal usage. Sesuaikan tema dan layout. Use your AI agent to do vibe code. Will fix some unecessary features later. End the end, it's just shortcut page.
 
 
 ## Demo
@@ -23,7 +23,7 @@ https://github.com/user-attachments/assets/3f7bcfd8-dd53-4f0f-ae9e-c056870e03d6
 - Backup & restore data lewat file `.json`
 - Navigasi penuh keyboard
 
-## ⌨️ Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Tombol | Aksi |
 |---|---|
@@ -38,11 +38,16 @@ https://github.com/user-attachments/assets/3f7bcfd8-dd53-4f0f-ae9e-c056870e03d6
 Manifest V3 · Vanilla JavaScript (ES Modules) · `localStorage` · Open-Meteo API — tanpa framework, tanpa build step.
 
 ## Instalasi
+1. Clone this repo or download the zip
+2. Extract it if you install via zip
+3. Buka `chrome://extensions`
+4. Aktifkan **Developer Mode**
+5. Klik **Load unpacked**, pilih folder hasil ekstrak
+6. Buka tab baru - done
 
-1. Buka `chrome://extensions`
-2. Aktifkan **Developer mode**
-3. Klik **Load unpacked**, pilih folder proyek ini
-4. Buka tab baru — selesai
+Why not upload it to chrome web store? 
+1. still blum layak (hasil vibecode)
+2. still miskin to pay to pay the developer fee. 
 
 ## Lisensi
 
