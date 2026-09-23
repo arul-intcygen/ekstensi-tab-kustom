@@ -911,7 +911,13 @@ function bindEvents() {
             case '/': e.preventDefault(); ui.searchInput.focus(); break;
             case 'n': case 'N': e.preventDefault(); openShortcutDialog(); break;
             case 'e': case 'E': toggleReorder(); break;
-            case 't': case 'T': toggleMode(); break;
+            // case 't': case 'T': toggleMode(); break;
+            case 't': case 'T': {
+                const btn = document.getElementById('theme-btn');
+                const rect = btn ? btn.getBoundingClientRect() : null;
+                toggleMode(rect ? { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 } : undefined);
+                break;
+            }
             default:
         }
     });

@@ -804,3 +804,9 @@ dialog::backdrop { background: rgba(36, 38, 34, 0.45); backdrop-filter: blur(3px
 .theme-swatches i:first-child { margin-left: 0; }
 .theme-text { display: flex; flex-direction: column; min-width: 0; }
 .theme-text small { color: var(--muted); font-size: 11.5px; }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}

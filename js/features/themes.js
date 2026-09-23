@@ -1,15 +1,3 @@
-/* =========================================================
-   js/features/themes.js — semua urusan tema.
-
-   Dua konsep yang terpisah:
-     • MODE  = terang / gelap   → atribut data-theme di <html>  (tombol bulan/matahari)
-     • TEMA  = paket visual     → atribut data-skin  di <html>  (dialog pemilih tema)
-   Keduanya bebas dikombinasikan: 2 tema × 2 mode = 4 tampilan.
-
-   Modul ini memegang: pemasangan mode & tema, latar gambar, dialog
-   pemilih tema, dan event tombol-tombolnya.
-   ========================================================= */
-
 import { KEYS, THEMES, DEFAULT_SKIN } from '../config.js';
 import { store } from '../storage.js';
 import { $, el, svg } from '../utils.js';
@@ -28,9 +16,37 @@ export function setMode(mode) {
     updateModeButton();
 }
 
-export function toggleMode() {
+export function toggleMode(origin) {
     if (isSingleModeSkin()) return;
-    setMode(getMode() === 'dark' ? 'light' : 'dark');
+    const nextMode = getMode() === 'dark' ? 'light' : 'dark';
+    applyModeWithReveal(nextMode, origin);
+}
+
+function applyModeWithReveal(mode, origin) {
+    const supportsReveal = 'startViewTransition' in document;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Tanpa titik asal (misal dari keyboard shortcut tanpa posisi jelas), atau
+    // browser/preferensi tidak mendukung → langsung ganti tanpa animasi
+    if (!supportsReveal || reduceMotion || !origin) {
+        setMode(mode);
+        return;
+    }
+
+    const { x, y } = origin;
+    const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y),
+    );
+
+    const transition = document.startViewTransition(() => setMode(mode));
+
+    transition.ready.then(() => {
+        document.documentElement.animate(
+            { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`] },
+            { duration: 500, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' },
+        );
+    });
 }
 
 function isSingleModeSkin() {
@@ -140,7 +156,9 @@ export function initThemes() {
     updateModeButton();
 
     const modeBtn = $('#theme-btn');
-    if (modeBtn) modeBtn.addEventListener('click', toggleMode);
+    if (modeBtn) {
+        modeBtn.addEventListener('click', (e) => toggleMode({ x: e.clientX, y: e.clientY }));
+    }
 
     const pickerBtn = $('#foot-theme');
     if (pickerBtn) pickerBtn.addEventListener('click', openThemePicker);
