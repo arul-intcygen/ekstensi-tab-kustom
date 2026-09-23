@@ -1,8 +1,3 @@
-/* =========================================================
-   Cozy Haven Tab — style.css
-   Token warna, radius, dan bayangan diambil dari design.md
-   ========================================================= */
-
 :root {
     color-scheme: light;
     --page-x: clamp(12px, 1.6vw, 28px);

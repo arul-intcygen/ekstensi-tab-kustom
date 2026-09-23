@@ -3,14 +3,6 @@ import { store } from './js/storage.js';
 import { $, el, svg } from './js/utils.js';
 import { initThemes, toggleMode } from './js/features/themes.js';
 
-/* =========================================================
-   Cozy Haven Tab — script.js
-
-   Alur kerja (seperti resep: bahan → masak → sajikan):
-     state (data)  →  render*() (menggambar)  →  event handler (mengubah data) → simpan → render ulang
-   ========================================================= */
-
-/* ---------- Konfigurasi ---------- */
 
 const DEFAULT_SETTINGS = {
     userName: 'Petualang',
