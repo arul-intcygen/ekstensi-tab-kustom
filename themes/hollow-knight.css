@@ -1,124 +1,164 @@
 /* =========================================================
-   Tema: Hollow Knight  (data-skin="hollow-knight")
+   Tema: Hollow Knight — "Luminous Cavern"  (data-skin="hollow-knight")
    ---------------------------------------------------------
-   Cara kerja: file ini HANYA menimpa variabel warna di style.css.
+   Versi 2: mengganti isi tema Hollow Knight lama dengan palet
+   dari design.md "Luminous Cavern" (Google Stitch).
+
+   Cara kerja tetap sama seperti versi lama: file ini HANYA
+   menimpa variabel warna (+ sedikit dekorasi) di style.css.
    Semua komponen otomatis ikut berubah karena memakai variabel itu.
 
    Aturan pakai:
-   - Harus dimuat SETELAH style.css di index.html.
+   - Harus dimuat SETELAH style.css di index.html (sudah begitu).
    - Selektor [data-skin][data-theme] lebih spesifik daripada
      :root[data-theme="dark"] di style.css, jadi selalu menang.
-   - Semua token warna ditimpa agar tidak ada sisa warna tema Cozy.
 
-   Sumber warna: diekstrak dari gambar latar (navy #081724/#0D2332,
-   teal kabut #438387, cahaya kunang-kunang #EEFFF7), lalu kontrasnya
-   divalidasi WCAG (teks kecil >= 4.5:1; isian/ikon >= 3:1).
+   Sumber warna: diambil dari bagian prosa "Colors" & "Components"
+   design.md (bukan blok YAML token M3-nya — blok YAML itu daftar
+   token mentah, sedangkan prosa + spesifikasi komponen adalah
+   warna yang benar-benar dipakai di mockup Stitch-nya).
+     Primer  (Luminous Azure) #38bdf8 / cerah #8ed5ff
+     Sekunder(Cavern Teal)    #2dd4bf
+     Tersier (Lantern Light)  #fef08a
+     Dasar   (Abyssal Navy)   #050b14
+     Teks    (Seashell White) #f0f9ff
+   Kontras sudah dicek kasar (teks kecil >= 4.5:1 di atas --card).
    ========================================================= */
 
 
-/* ---------- MODE GELAP ---------- */
+/* ---------- FONT (opsional tapi disarankan) ----------
+   design.md memakai Space Grotesk (judul), Be Vietnam Pro (isi),
+   dan Space Mono (label/angka). Supaya font ini benar-benar
+   termuat, tambahkan SATU baris <link> di <head> index.html,
+   tepat di bawah baris <link> font yang sudah ada:
+
+   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Be+Vietnam+Pro:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+
+   Kalau baris itu tidak ditambahkan, dua baris di bawah ini akan
+   otomatis jatuh ke Georgia / font sistem (aman, tidak error). */
+:root[data-skin="hollow-knight"] {
+    --font-serif: 'Space Grotesk', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+
+/* ---------- MODE GELAP (utama — cocok dengan mood asli design.md) ---------- */
 :root[data-skin="hollow-knight"][data-theme="dark"] {
     color-scheme: dark;
 
-    /* Permukaan (dari warna dominan gambar) */
-    --canvas: #071119;
-    --card: rgba(13, 35, 50, 0.78);
-    --inset: #081724;
-    --tile: #11293A;
-    --border: #153144;
-    --stroke: #214556;
-    --hover: #1B3A4D;
+    /* Permukaan: bedrock gelap + lapisan "kaca" tipis */
+    --canvas: #050b14;
+    --card: rgba(9, 19, 32, 0.60);
+    --inset: #081320;
+    --tile: rgba(15, 29, 48, 0.65);
+    --border: rgba(56, 189, 248, 0.18);
+    --stroke: rgba(56, 189, 248, 0.25);
+    --hover: rgba(56, 189, 248, 0.10);
     --dot: transparent;              /* pola titik Cozy dimatikan */
-    --icon-bg: #E6F1EF;              /* bingkai favicon terang agar logo gelap tetap terlihat */
+    --icon-bg: #e6f1f7;              /* bingkai favicon terang agar logo gelap tetap terlihat */
 
     /* Teks */
-    --text: #E6F1EF;                 /* 13,96:1 di kartu */
-    --muted: #8DB0B4;                /*  6,91:1 */
-    --muted-2: #B3CCCF;              /*  9,55:1 */
+    --text: #f0f9ff;                 /* seashell white, ~15:1 di kartu */
+    --muted: #94a3b8;                /* stalactite slate, ~5,3:1 */
+    --muted-2: #bdc8d1;              /* ~7,7:1 */
 
     /* Aksen */
-    --primary: #89CBD0;              /* teks teal: judul, tautan (8,83:1) */
-    --primary-fill: #398186;         /* Mist Teal: tombol, checkbox (putih di atasnya 4,51:1) */
-    --on-primary: #FFFFFF;
-    --grad-active: linear-gradient(135deg, #398186, #2A6367);
-    --secondary: #6FAAAD;            /* eyebrow, progres, cincin fokus (6,16:1) */
-    --tertiary: #D9EC8A;             /* Firefly Glow: bintang prioritas, ikon daun (12,5:1) */
-    --sage-btn: #17404D;             /* tombol sekunder */
-    --chip-sage: #163D4A;
-    --chip-clay: #2A2450;            /* peran "clay" diganti Wisteria Violet */
-    --chip-neutral: #0F2A3A;
-    --clay-text: #B7ACF0;            /* 6,94:1 di chip violet */
-    --up: #8FD6A8;
-    --down: #E0813A;                 /* Infection Orange */
+    --primary: #8ed5ff;              /* teks: judul, tautan, eyebrow aktif (~10,8:1) */
+    --primary-fill: #38bdf8;         /* Luminous Azure: tombol, checkbox, active state */
+    --on-primary: #00243a;           /* navy gelap agar kontras di atas fill cyan terang */
+    --grad-active: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    --secondary: #2dd4bf;            /* Cavern Teal: eyebrow, progres, cincin fokus */
+    --tertiary: #fef08a;             /* Lantern Light: bintang prioritas, ikon aksen */
+    --sage-btn: rgba(56, 189, 248, 0.16);   /* tombol sekunder */
+    --chip-sage: rgba(56, 189, 248, 0.12);
+    --chip-clay: rgba(254, 240, 138, 0.12); /* chip peringatan lantern */
+    --chip-neutral: rgba(46, 53, 63, 0.45);
+    --clay-text: #fef08a;
+    --up: #2dd4bf;
+    --down: #ffb4ab;                 /* token "error" design.md */
 
     /* Dekorasi */
-    --search-bg: rgba(13, 35, 50, 0.80);
-    --tip-bg: linear-gradient(160deg, #162B3B, #1B2445);
-    --tape-a: rgba(217, 236, 138, 0.28);
-    --tape-b: rgba(116, 104, 176, 0.55);
+    --search-bg: rgba(5, 11, 20, 0.70);
+    --tip-bg: linear-gradient(160deg, rgba(21, 28, 38, 0.75), rgba(9, 19, 32, 0.75));
+    --tape-a: rgba(254, 240, 138, 0.28);
+    --tape-b: rgba(45, 212, 191, 0.35);
 
-    /* Bayangan: lebih pekat + kilau teal saat hover */
-    --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.30);
-    --shadow-float: 0 12px 32px -4px rgba(0, 0, 0, 0.55), 0 4px 12px -2px rgba(0, 0, 0, 0.35);
-    --shadow-hover: 0 10px 24px -2px rgba(57, 129, 134, 0.35);
+    /* Bayangan: gelap pekat + kilau azure/teal saat hover, bukan abu netral */
+    --shadow-card: 0 8px 32px -10px rgba(2, 132, 199, 0.20), 0 2px 8px -2px rgba(0, 0, 0, 0.45);
+    --shadow-float: 0 20px 48px -10px rgba(0, 0, 0, 0.70), 0 0 24px 0 rgba(45, 212, 191, 0.15);
+    --shadow-hover: 0 10px 26px -4px rgba(56, 189, 248, 0.35);
 
-    /* Dipakai di tahap latar gambar (langkah 4) */
-    --bg-veil: rgba(7, 17, 25, 0.55);
+    /* Dipakai di lapisan latar gambar */
+    --bg-veil: rgba(5, 11, 20, 0.55);
 }
 
 
-/* ---------- MODE TERANG ---------- */
+/* ---------- MODE TERANG ("cavern" siang — dirancang, bukan dari gambar) ---------- */
 :root[data-skin="hollow-knight"][data-theme="light"] {
     color-scheme: light;
 
-    /* Permukaan: "kabut" teal pucat (dirancang, tidak ada di gambar) */
-    --canvas: #E6EFEE;
-    --card: rgba(246, 250, 249, 0.80);
-    --inset: #DDE8E7;
-    --tile: #EDF4F3;
-    --border: #C9D9D8;
-    --stroke: #B9CDCC;
-    --hover: #D6E4E3;
+    --canvas: #eaf3f8;
+    --card: rgba(248, 251, 253, 0.82);
+    --inset: #dde9f0;
+    --tile: #eef5f9;
+    --border: #cddce4;
+    --stroke: #bfd2db;
+    --hover: #dbe9f0;
     --dot: transparent;
-    --icon-bg: #FFFFFF;
+    --icon-bg: #ffffff;
 
-    /* Teks */
-    --text: #0E2A2E;                 /* 14,37:1 di kartu */
-    --muted: #4E6B6E;                /*  5,47:1 */
-    --muted-2: #35585C;              /*  7,39:1 */
+    --text: #0b2230;                 /* ~14:1 di kartu */
+    --muted: #4f6b7a;                /* ~5,6:1 */
+    --muted-2: #365662;              /* ~7,7:1 */
 
-    /* Aksen */
-    --primary: #1F5A5F;              /* teks teal (7,43:1) */
-    --primary-fill: #398186;         /* sama dengan mode gelap */
-    --on-primary: #FFFFFF;
-    --grad-active: linear-gradient(135deg, #398186, #2A6367);
-    --secondary: #2F7378;            /* 5,19:1 */
-    --tertiary: #6F7F10;             /* Firefly Glow versi dalam (hanya ikon/garis) */
-    --sage-btn: #CFE3E2;
-    --chip-sage: #D5E7E6;
-    --chip-clay: #E4E0F3;            /* Wisteria Violet */
-    --chip-neutral: #E2ECEB;
-    --clay-text: #4F4590;            /* 6,28:1 */
-    --up: #2E7A4A;
-    --down: #A8460F;                 /* Infection Orange versi dalam (5,63:1) */
+    --primary: #036f9c;              /* teks teal-biru gelap agar tetap kontras (~7,2:1) */
+    --primary-fill: #0ea5e9;
+    --on-primary: #ffffff;
+    --grad-active: linear-gradient(135deg, #0ea5e9, #0284c7);
+    --secondary: #0f8f80;            /* versi gelap Cavern Teal (~5,5:1) */
+    --tertiary: #7a6c12;             /* versi gelap Lantern Light, hanya ikon/garis */
+    --sage-btn: #d7ecf5;
+    --chip-sage: #dbeef7;
+    --chip-clay: #fbf4d6;
+    --chip-neutral: #e6eef2;
+    --clay-text: #7a6512;
+    --up: #0f8f80;
+    --down: #b3261e;
 
-    /* Dekorasi */
-    --search-bg: rgba(246, 250, 249, 0.82);
-    --tip-bg: linear-gradient(160deg, #EAF3F2, #E8E5F5);
-    --tape-a: rgba(111, 127, 16, 0.28);
-    --tape-b: rgba(116, 104, 176, 0.40);
+    --search-bg: rgba(248, 251, 253, 0.85);
+    --tip-bg: linear-gradient(160deg, #eaf6fb, #e7f4f2);
+    --tape-a: rgba(122, 108, 18, 0.25);
+    --tape-b: rgba(15, 143, 128, 0.30);
 
-    --shadow-card: 0 4px 20px -2px rgba(14, 42, 46, 0.08), 0 2px 6px -1px rgba(14, 42, 46, 0.05);
-    --shadow-float: 0 12px 32px -4px rgba(31, 90, 95, 0.14), 0 4px 12px -2px rgba(14, 42, 46, 0.06);
-    --shadow-hover: 0 10px 24px -2px rgba(31, 90, 95, 0.18);
+    --shadow-card: 0 4px 20px -2px rgba(11, 34, 48, 0.08), 0 2px 6px -1px rgba(11, 34, 48, 0.05);
+    --shadow-float: 0 12px 32px -4px rgba(3, 111, 156, 0.14), 0 4px 12px -2px rgba(11, 34, 48, 0.06);
+    --shadow-hover: 0 10px 24px -2px rgba(3, 111, 156, 0.18);
 
-    --bg-veil: rgba(230, 239, 238, 0);
+    --bg-veil: rgba(234, 243, 248, 0);
 }
 
-:root[data-skin="hollow-knight"][data-theme="light"] .profile-avatar { color: #EEFFF7; }  /* 4,35:1 */
+:root[data-skin="hollow-knight"][data-theme="light"] .profile-avatar { color: #f0f9ff; }
 
-/* Efek kaca: latar di belakang kartu dan dialog sedikit dikaburkan */
+/* ---------- Efek kaca & tipografi label ----------
+   design.md: blur tipis (4–6px) supaya gambar latar & riak air
+   tetap tajam terlihat — beda dari versi lama yang blur(14px). */
 :root[data-skin="hollow-knight"] .card,
 :root[data-skin="hollow-knight"] dialog {
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(6px);
+}
+
+/* Elemen berlabel/angka (eyebrow, chip, jam, kbd, statistik kunjungan)
+   memakai Space Mono huruf kapital + jarak huruf, sesuai skala tipografi
+   "label-md/label-sm" di design.md. Murni tipografi, tidak mengubah warna. */
+:root[data-skin="hollow-knight"] .eyebrow,
+:root[data-skin="hollow-knight"] .chip,
+:root[data-skin="hollow-knight"] kbd,
+:root[data-skin="hollow-knight"] .clock time,
+:root[data-skin="hollow-knight"] .clock span,
+:root[data-skin="hollow-knight"] .visit-stat,
+:root[data-skin="hollow-knight"] .cat-count,
+:root[data-skin="hollow-knight"] .meter-row {
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
 }

@@ -1,115 +1,205 @@
 /* =========================================================
    Tema: Minimalist Focus  (data-skin="minimalist")
    ---------------------------------------------------------
-   Monokrom, tanpa gambar latar, border tipis, shadow sangat
-   halus, satu aksen warna (hijau). Tujuan: shortcut & widget
-   terasa rapi dan tidak mengganggu fokus.
+   Versi 2 — mengikuti design.md resmi:
+     • Mode terang = "Tactile Slate Studio"  (Plus Jakarta Sans)
+     • Mode gelap  = "Dark Slate Studio"     (Geist + JetBrains Mono)
 
-   Dua mode (terang/gelap) seperti pola hollow-knight.css.
+   Catatan performa: backdrop-filter HANYA dipasang di .card dan
+   dialog (Level 1/2/3 pada dokumen). Item kecil berulang
+   (.shortcut/.task/.visit/.stat) sengaja TIDAK diberi blur —
+   warna translucent/solid saja — supaya tetap ringan meski
+   jumlahnya banyak.
+
    Harus dimuat SETELAH style.css.
    ========================================================= */
 
-/* ---------- MODE GELAP ---------- */
-:root[data-skin="minimalist"][data-theme="dark"] {
-    color-scheme: dark;
-
-    --canvas: #09090b;
-    --card: #18181b;
-    --inset: #111113;
-    --tile: #1c1c1f;
-    --border: #27272a;
-    --stroke: #2b2b2f;
-    --hover: #232326;
-    --dot: transparent;
-    --icon-bg: #f4f4f5;
-
-    --text: #fafafa;
-    --muted: #a1a1aa;
-    --muted-2: #d4d4d8;
-
-    --primary: #fafafa;
-    --primary-fill: #fafafa;
-    --on-primary: #18181b;
-    --grad-active: linear-gradient(135deg, #fafafa, #d4d4d8);
-    --secondary: #a1a1aa;
-    --tertiary: #4ade80;
-    --sage-btn: #1c1c1f;
-    --chip-sage: #1c1c1f;
-    --chip-clay: rgba(74, 222, 128, 0.15);
-    --chip-neutral: #1c1c1f;
-    --clay-text: #4ade80;
-    --up: #4ade80;
-    --down: #f87171;
-
-    --search-bg: rgba(24, 24, 27, 0.9);
-    --tip-bg: linear-gradient(160deg, #1c1c1f, #18181b);
-    --tape-a: rgba(255, 255, 255, 0.06);
-    --tape-b: rgba(255, 255, 255, 0.06);
-
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
-
-    --bg-veil: rgba(9, 9, 11, 0);
-}
-
-/* ---------- MODE TERANG ---------- */
+/* ========================= MODE TERANG — Tactile Slate Studio ========================= */
 :root[data-skin="minimalist"][data-theme="light"] {
     color-scheme: light;
 
-    --canvas: #f4f4f5;
-    --card: #ffffff;
-    --inset: #f4f4f5;
-    --tile: #fafafa;
-    --border: #e4e4e7;
-    --stroke: #e4e4e7;
-    --hover: #f4f4f5;
+    --font-serif: 'Plus Jakarta Sans', system-ui, sans-serif;   /* satu keluarga font untuk semua peran */
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+    --canvas: #d8dce2;                       /* Surface Neutral Canvas */
+    --card: rgba(240, 243, 246, 0.65);       /* Cards & Panels */
+    --inset: rgba(0, 0, 0, 0.03);            /* sunken input base tone */
+    --tile: rgba(255, 255, 255, 0.6);
+    --border: rgba(255, 255, 255, 0.6);      /* Border Specular Highlight */
+    --stroke: #c6c6cb;                       /* outline-variant, untuk garis pembatas */
+    --hover: rgba(255, 255, 255, 0.8);
     --dot: transparent;
     --icon-bg: #ffffff;
 
-    --text: #18181b;
-    --muted: #71717a;
-    --muted-2: #52525b;
+    --text: #1e2229;                         /* Primary Ink */
+    --muted: #848d9a;                        /* Muted Gray Text */
+    --muted-2: #45474b;                      /* on-surface-variant */
 
-    --primary: #18181b;
-    --primary-fill: #18181b;
+    --primary: #1e2229;
+    --primary-fill: #1e2229;                 /* Primary Buttons: charcoal */
     --on-primary: #ffffff;
-    --grad-active: linear-gradient(135deg, #18181b, #3f3f46);
-    --secondary: #71717a;
-    --tertiary: #16a34a;
-    --sage-btn: #f4f4f5;
-    --chip-sage: #f4f4f5;
-    --chip-clay: rgba(22, 163, 74, 0.12);
-    --chip-neutral: #f4f4f5;
-    --clay-text: #16a34a;
-    --up: #16a34a;
-    --down: #dc2626;
+    --grad-active: linear-gradient(135deg, #ffffff, #eaeef4);
+    --secondary: #10b981;                    /* Secondary Telemetry */
+    --tertiary: #4edea3;
+    --sage-btn: rgba(255, 255, 255, 0.5);    /* Secondary/Ghost button glass */
+    --chip-sage: rgba(16, 185, 129, 0.12);
+    --chip-clay: rgba(16, 185, 129, 0.12);   /* badge "Saved"-style */
+    --chip-neutral: #eaeef4;
+    --clay-text: #047857;
+    --up: #10b981;
+    --down: #ba1a1a;
 
-    --search-bg: rgba(255, 255, 255, 0.92);
-    --tip-bg: linear-gradient(160deg, #fafafa, #f4f4f5);
-    --tape-a: rgba(0, 0, 0, 0.04);
-    --tape-b: rgba(0, 0, 0, 0.04);
+    --search-bg: rgba(0, 0, 0, 0.03);
+    --tip-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.6), rgba(240, 243, 246, 0.4));
+    --tape-a: rgba(30, 34, 41, 0.05);
+    --tape-b: rgba(16, 185, 129, 0.12);
 
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.05);
-    --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* Level 1 (kartu) */
+    --shadow-card: 0 20px 40px -15px rgba(28, 38, 56, 0.08), 0 4px 10px -2px rgba(28, 38, 56, 0.04);
+    /* Level 2 (dialog/modal) */
+    --shadow-float: 0 24px 48px -12px rgba(15, 23, 42, 0.14), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
+    --shadow-hover: 0 24px 44px -14px rgba(28, 38, 56, 0.12), 0 6px 14px -2px rgba(28, 38, 56, 0.06);
 
-    --bg-veil: rgba(244, 244, 245, 0);
+    --bg-veil: rgba(216, 220, 226, 0);
 }
 
-/* Kartu lebih rapat/kecil radiusnya, sesuai gambar acuan (12-16px, bukan 24px) */
-:root[data-skin="minimalist"] .card {
+/* ========================= MODE GELAP — Dark Slate Studio ========================= */
+:root[data-skin="minimalist"][data-theme="dark"] {
+    color-scheme: dark;
+
+    --font-serif: 'Geist', system-ui, sans-serif;
+    --font-sans: 'Geist', system-ui, sans-serif;
+
+    --canvas: #090d10;                       /* Base Canvas / Level 0 */
+    --card: rgba(22, 27, 34, 0.72);          /* Frosted Obsidian Surface */
+    --inset: #0d1117;                        /* Surface Layer 1 */
+    --tile: #161b22;                         /* Surface Layer 2, flat (tanpa blur) */
+    --border: rgba(255, 255, 255, 0.08);     /* Specular Border */
+    --stroke: rgba(255, 255, 255, 0.05);
+    --hover: rgba(255, 255, 255, 0.06);
+    --dot: transparent;
+    --icon-bg: #eef2f6;
+
+    --text: #f0f6fc;                         /* Text Primary */
+    --muted: #8b949e;                        /* Text Secondary */
+    --muted-2: #bbcabf;
+
+    --primary: #f0f6fc;                      /* judul tetap off-white, BUKAN mint */
+    --primary-fill: #10b981;                 /* Primary Button: mint */
+    --on-primary: #041f16;                   /* teks gelap di atas mint */
+    --grad-active: linear-gradient(135deg, #21262d, #161b22);
+    --secondary: #10b981;
+    --tertiary: #34d399;
+    --sage-btn: rgba(255, 255, 255, 0.04);   /* Secondary Smoked Glass */
+    --chip-sage: rgba(255, 255, 255, 0.03);
+    --chip-clay: rgba(16, 185, 129, 0.1);    /* Active/Success chip */
+    --chip-neutral: #181c22;
+    --clay-text: #34d399;
+    --up: #10b981;
+    --down: #ffb4ab;
+
+    --search-bg: #0d1117;
+    --tip-bg: linear-gradient(160deg, #161b22, #10141a);
+    --tape-a: rgba(255, 255, 255, 0.05);
+    --tape-b: rgba(16, 185, 129, 0.12);
+
+    /* Level 2 (kartu) */
+    --shadow-card: 0 8px 32px -4px rgba(0, 0, 0, 0.5);
+    /* Level 3 (dialog/overlay) */
+    --shadow-float: 0 24px 48px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(16, 185, 129, 0.1);
+    --shadow-hover: 0 12px 36px -6px rgba(0, 0, 0, 0.55);
+
+    --bg-veil: rgba(9, 13, 16, 0);
+}
+
+/* ---------- Elevasi & bentuk: kartu & dialog (satu-satunya elemen yang diberi blur) ---------- */
+:root[data-skin="minimalist"][data-theme="light"] .card {
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+:root[data-skin="minimalist"][data-theme="light"] dialog {
+    border-radius: 32px;
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+}
+:root[data-skin="minimalist"][data-theme="dark"] .card {
     border-radius: 16px;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
 }
-:root[data-skin="minimalist"] .shortcut,
-:root[data-skin="minimalist"] .task,
-:root[data-skin="minimalist"] .visit,
-:root[data-skin="minimalist"] .stat {
+:root[data-skin="minimalist"][data-theme="dark"] dialog {
+    border-radius: 24px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* Item kecil: radius sesuai skala tiap mode, TANPA blur (perf) */
+:root[data-skin="minimalist"][data-theme="light"] .shortcut,
+:root[data-skin="minimalist"][data-theme="light"] .task,
+:root[data-skin="minimalist"][data-theme="light"] .visit,
+:root[data-skin="minimalist"][data-theme="light"] .stat {
     border-radius: 12px;
 }
+:root[data-skin="minimalist"][data-theme="dark"] .shortcut,
+:root[data-skin="minimalist"][data-theme="dark"] .task,
+:root[data-skin="minimalist"][data-theme="dark"] .visit,
+:root[data-skin="minimalist"][data-theme="dark"] .stat {
+    border-radius: 8px;
+}
 
-/* Matikan dekorasi "selotip" di Tips & Catatan — biar bersih, sesuai tujuan fokus */
+/* Input & search: sunken/debossed matte — matikan blur bawaan, biar flat sesuai spesifikasi */
+:root[data-skin="minimalist"] .search,
+:root[data-skin="minimalist"] .dlg-body input,
+:root[data-skin="minimalist"] .dlg-body select,
+:root[data-skin="minimalist"] .task-form input {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+:root[data-skin="minimalist"][data-theme="light"] .search {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), inset 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+:root[data-skin="minimalist"][data-theme="dark"] .search {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Item navigasi aktif: kapsul terang + teks gelap, konsisten di kedua mode (sesuai acuan visual) */
+:root[data-skin="minimalist"][data-theme="light"] .cat-item.active {
+    background: linear-gradient(135deg, #ffffff, #f0f4fa);
+    color: #1e2229;
+    box-shadow: 0 4px 10px -2px rgba(28, 38, 56, 0.08);
+}
+:root[data-skin="minimalist"][data-theme="dark"] .cat-item.active {
+    background: rgba(240, 246, 252, 0.92);
+    color: #10141a;
+    box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+}
+
+/* Mode gelap: label/angka teknis pakai JetBrains Mono, bukan Geist */
+:root[data-skin="minimalist"][data-theme="dark"] .clock time,
+:root[data-skin="minimalist"][data-theme="dark"] .stat strong,
+:root[data-skin="minimalist"][data-theme="dark"] .visit-stat strong,
+:root[data-skin="minimalist"][data-theme="dark"] .visit-stat small,
+:root[data-skin="minimalist"][data-theme="dark"] .chip,
+:root[data-skin="minimalist"][data-theme="dark"] .cat-count,
+:root[data-skin="minimalist"][data-theme="dark"] kbd {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+:root[data-skin="minimalist"][data-theme="dark"] .chip-sage {
+    color: #8b949e;   /* chip "inactive" style — bukan off-white */
+}
+
+/* Matikan dekorasi "selotip" di Tips & Catatan — tetap bersih di kedua mode */
 :root[data-skin="minimalist"] .tip-card::before,
 :root[data-skin="minimalist"] .notes::before {
     display: none;
+}
+
+
+:root[data-skin="minimalist"] .icon img {
+    filter: grayscale(1);
+    transition: filter 0.2s;
+}
+:root[data-skin="minimalist"] .shortcut:hover .icon img {
+    filter: grayscale(0);   /* warna asli muncul saat hover — sedikit "hidup" tanpa ramai */
 }

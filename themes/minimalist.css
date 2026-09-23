@@ -42,7 +42,7 @@
     --secondary: #10b981;                    /* Secondary Telemetry */
     --tertiary: #4edea3;
     --sage-btn: rgba(255, 255, 255, 0.5);    /* Secondary/Ghost button glass */
-    --chip-sage: rgba(16, 185, 129, 0.12);
+    --chip-sage: #eaeef4;                    /* dinetralkan (poin 2) */
     --chip-clay: rgba(16, 185, 129, 0.12);   /* badge "Saved"-style */
     --chip-neutral: #eaeef4;
     --clay-text: #047857;
@@ -113,34 +113,33 @@
 }
 
 /* ---------- Elevasi & bentuk: kartu & dialog (satu-satunya elemen yang diberi blur) ---------- */
+/* Poin 3: radius diperkecil & diseragamkan (lebih "tegas/terstruktur", beda karakter dari Cozy) */
 :root[data-skin="minimalist"][data-theme="light"] .card {
-    border-radius: 24px;
+    border-radius: 12px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 }
 :root[data-skin="minimalist"][data-theme="light"] dialog {
-    border-radius: 32px;
+    border-radius: 20px;
     backdrop-filter: blur(32px) saturate(180%);
     -webkit-backdrop-filter: blur(32px) saturate(180%);
 }
 :root[data-skin="minimalist"][data-theme="dark"] .card {
-    border-radius: 16px;
+    border-radius: 12px;
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
 }
 :root[data-skin="minimalist"][data-theme="dark"] dialog {
-    border-radius: 24px;
+    border-radius: 20px;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
 }
 
-/* Item kecil: radius sesuai skala tiap mode, TANPA blur (perf) */
+/* Item kecil: radius diseragamkan 8px di kedua mode, TANPA blur (perf) */
 :root[data-skin="minimalist"][data-theme="light"] .shortcut,
 :root[data-skin="minimalist"][data-theme="light"] .task,
 :root[data-skin="minimalist"][data-theme="light"] .visit,
-:root[data-skin="minimalist"][data-theme="light"] .stat {
-    border-radius: 12px;
-}
+:root[data-skin="minimalist"][data-theme="light"] .stat,
 :root[data-skin="minimalist"][data-theme="dark"] .shortcut,
 :root[data-skin="minimalist"][data-theme="dark"] .task,
 :root[data-skin="minimalist"][data-theme="dark"] .visit,
@@ -193,4 +192,20 @@
 :root[data-skin="minimalist"] .tip-card::before,
 :root[data-skin="minimalist"] .notes::before {
     display: none;
+}
+
+/* Poin 1: ikon shortcut grayscale, warna asli muncul saat hover */
+:root[data-skin="minimalist"] .icon img {
+    filter: grayscale(1);
+    transition: filter 0.2s;
+}
+:root[data-skin="minimalist"] .shortcut:hover .icon img {
+    filter: grayscale(0);
+}
+
+:root[data-skin="minimalist"] .icon.icon-letter {
+    filter: grayscale(1);
+}
+:root[data-skin="minimalist"] .shortcut:hover .icon.icon-letter {
+    filter: grayscale(0);
 }

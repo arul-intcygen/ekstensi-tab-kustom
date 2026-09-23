@@ -438,7 +438,7 @@ kbd {
 .hub-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .shortcut-grid {
-    --rows: 3;         
+    --rows: 3;       /*  jumlah baris  */
     --tile-h: 120px; 
     --gap: 14px;       
     --pad: 8px;         
