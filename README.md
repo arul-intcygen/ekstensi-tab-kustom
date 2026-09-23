@@ -2,21 +2,14 @@
 
 Tab baru Chrome yang hangat: shortcut tanpa batas, to-do, catatan, cuaca, dan empat tema visual — semuanya berjalan 100% lokal tanpa server maupun akun.
 
-## Screenshot
-
-<!-- Ganti dengan gambar aslimu, contoh:
-![Tampilan Cozy Haven Tab](./assets/screenshot.png)
--->
-
-*(Tempel screenshot di sini)*
 
 ## Demo
 
-<!-- Ganti dengan link video demo, contoh:
-[![Demo Cozy Haven Tab](./assets/thumbnail.png)](https://youtu.be/xxxxxxx)
--->
 
-*(Tempel link/video demo di sini)*
+
+https://github.com/user-attachments/assets/3f7bcfd8-dd53-4f0f-ae9e-c056870e03d6
+
+
 
 ## Fitur
 
