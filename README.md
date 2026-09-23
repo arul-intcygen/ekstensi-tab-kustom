@@ -47,7 +47,7 @@ Manifest V3 · Vanilla JavaScript (ES Modules) · `localStorage` · Open-Meteo A
 
 Why not upload it to chrome web store? 
 1. still blum layak (hasil vibecode)
-2. still miskin to pay to pay the developer fee. 
+2. still miskin to pay the developer fee. 
 
 ## Lisensi
 
